@@ -1,209 +1,179 @@
-🌍 CarbonSense
-Revealing the True Carbon Cost of Economic Growth using AI on Databricks
-📌 Project Overview
+# 🌍 **CarbonSense**
+## **Revealing the True Carbon Cost of Economic Growth using AI on Databricks**
 
-CarbonSense is an end-to-end Databricks Lakehouse + AI analytics project that measures carbon inefficiency across emission sources and countries.
+---
 
-Instead of only reporting CO₂ emissions, this project uses machine learning to learn the expected CO₂ emissions based on economic activity (GDP, energy usage) and compares them with actual emissions to identify:
+## 🚀 **Project Summary**
 
-Carbon-inefficient sectors
+**CarbonSense** is an end-to-end **Databricks Lakehouse + AI analytics solution** designed to measure **carbon inefficiency** across emission sources and countries.
 
-Carbon-efficient best practices
+Instead of only reporting absolute CO₂ emissions, this project uses **machine learning** to learn the *expected* CO₂ emissions based on economic and energy indicators and compares them with *actual* emissions to identify:
 
-Countries requiring urgent climate intervention
+- ❌ Carbon-inefficient sectors and countries  
+- ✅ Carbon-efficient best practices  
+- 🎯 Priority areas for climate intervention  
 
-The solution is designed as a decision-support system for policymakers, sustainability teams, and climate researchers.
+The project demonstrates how **Databricks, Delta Lake, ML, and SQL analytics** can be combined to build a **real-world decision support system** for climate intelligence.
 
-🎯 Problem Statement
+---
 
-Traditional carbon analysis focuses on absolute emissions, which does not account for economic scale.
+## 🎯 **Problem Statement**
 
-Problem:
-How can we identify whether a sector or country is emitting more CO₂ than it reasonably should, given its economic and energy activity?
+Traditional climate analysis focuses on **absolute emissions**, which fails to account for economic scale.
 
-Solution:
-Train an AI model to learn expected CO₂ emissions and compute a Carbon Gap:
+### ❓ The Core Question
+> *Is a country or sector emitting more CO₂ than it reasonably should, given its economic activity?*
 
-Carbon Gap = Actual CO₂ − AI-Expected CO₂
+### ✅ Solution Approach
+CarbonSense introduces a new metric:
 
 
-Positive Gap → Carbon-inefficient (problem)
+- **Positive Carbon Gap** → Carbon-inefficient (problematic)
+- **Negative Carbon Gap** → Carbon-efficient (good performance)
 
-Negative Gap → Carbon-efficient (good performance)
+This allows fair, data-driven comparison across sectors and countries.
 
-🧠 Why AI is Required
+---
 
-Rule-based thresholds cannot capture complex, non-linear relationships between:
+## 🤖 **Why AI is Required**
 
-GDP
-
-Energy consumption
-
-Sectoral emissions
+Rule-based thresholds cannot capture the complex relationship between:
+- GDP
+- Energy consumption
+- Sector-level emissions
 
 AI enables:
+- Learning expected emissions dynamically
+- Comparing performance beyond raw totals
+- Turning predictions into **actionable insights**
 
-Learning expected emissions dynamically
+---
 
-Comparing performance across countries and sectors
+## 🏗️ **Architecture Overview**
+### *(Databricks Lakehouse – Medallion Architecture)*
 
-Turning predictions into actionable insights
 
-🏗️ Architecture (Databricks Lakehouse)
+---
 
-Medallion Architecture used:
+### 🟤 **Bronze Layer – Raw Data**
+- Source: OWID CO₂ dataset
+- Stored as Delta table
 
-🟤 Bronze Layer
 
-Raw OWID CO₂ dataset
+---
 
-Stored as Delta table
+### ⚪ **Silver Layer – Cleaned & Structured**
+- Sector-level emissions
+- Country & year mapping
+- Economic and energy indicators
 
-carbon_sense.bronze.co2_raw
 
-⚪ Silver Layer
+Predictions are **persisted back to Delta**, enabling downstream analytics.
 
-Cleaned & structured sector-level data
+---
 
-Key columns: country, year, sector, CO₂, GDP, energy
+## 🤖 **Machine Learning Component**
 
-carbon_sense.silver.sector_metrics
+- **ML Task:** Regression
+- **Model Used:** Linear Regression (interpretable & explainable)
+- **Features:**
+  - GDP
+  - Energy per capita
+- **Target Variable:** Sector-level CO₂ emissions
 
-🟡 Gold Layer
+### 📊 **Model Evaluation**
+- Train/Test Split: 80/20
+- Metric Used: **RMSE**
+- RMSE Achieved: **17829**
 
-ML-ready features
+> *Note:* CO₂ values are measured at large absolute scale; the objective is **relative deviation (carbon gap)**, not exact prediction accuracy.
 
-carbon_sense.gold.ml_features
+---
 
+## 🔄 **Database ↔ AI Workflow**
 
-AI predictions written back to Delta
+1. Raw data ingested into Delta tables
+2. Features engineered in Gold layer
+3. ML model trained on Gold data
+4. Predictions written back to Delta
+5. Databricks SQL dashboards consume prediction tables
 
-carbon_sense.gold.predictions
+This creates a **closed-loop Lakehouse + AI system**.
 
-🤖 Machine Learning Component
+---
 
-Task: Regression (predict expected CO₂ emissions)
+## 📊 **Analytics & Dashboards**
+*(Built using Databricks SQL)*
 
-Model: Linear Regression (interpretable & explainable)
+### Key Insights Delivered:
+- 📌 KPI: Average Global Carbon Inefficiency
+- 📌 KPI: % of emissions exceeding AI-expected levels
+- 📌 KPI: Most carbon-inefficient sector
+- 📌 KPI: Most carbon-efficient sector
+- 📈 Line Chart: Actual vs AI-Expected CO₂ emissions
+- 📊 Bar Chart: Carbon efficiency by emission source
+- 🌍 Bar Chart: Top carbon-inefficient countries
+- 🥧 Pie Chart: Sector-wise contribution to global CO₂
 
-Features used:
+All dashboards are powered directly from **Delta tables**, ensuring governance and consistency.
 
-GDP
+---
 
-Energy per capita
+## 🌱 **Business Impact & Use Cases**
 
-Label: Sector CO₂ emissions
+### 👥 Who Can Use This?
+- Government climate policy teams
+- ESG & sustainability analysts
+- Climate research organizations
+- Energy & industrial planners
 
-🔍 Evaluation
+### 🧠 Decisions Enabled:
+- Identify sectors requiring emission controls
+- Benchmark efficient industries
+- Prioritize countries for climate intervention
+- Support data-driven climate policy
 
-Train/Test split: 80/20
+---
 
-Metric used: RMSE
+## 🛠️ **Tech Stack**
 
-RMSE achieved: 17829
+- Databricks Lakehouse
+- Delta Lake
+- PySpark
+- Spark MLlib
+- Databricks SQL
+- MLflow
+- GitHub
 
-Note: CO₂ values are measured at large absolute scale; the goal is relative deviation (carbon gap), not exact prediction.
+---
 
-🔄 Database ↔ AI Workflow
+## ▶️ **How to Run the Project (High-Level)**
 
-Data ingested into Delta tables
+1. Upload raw dataset to Databricks
+2. Execute Bronze → Silver → Gold notebooks
+3. Train ML model and generate predictions
+4. Build SQL dashboards from Gold tables
 
-ML model trained on Gold features
+---
 
-Predictions written back to Delta
+## 📚 **Key Learnings**
 
-Databricks SQL dashboards consume prediction tables
+- Designing an end-to-end Lakehouse architecture
+- Applying ML for insight generation, not just prediction
+- Using Databricks SQL for decision-grade analytics
+- Converting data into real-world climate insights
 
-Insights visualized for decision-making
+---
 
-📊 Analytics & Dashboard
+## 🧑‍💻 **Author**
 
-Built using Databricks SQL Dashboards.
+**Rohit Ranjan**  
+Aspiring Data Analyst | Data & AI Enthusiast  
 
-Key Visualizations:
+---
 
-KPI: Average Global Carbon Inefficiency
+## 🔗 **Project Links**
+- GitHub Repository: *(add link here)*
+- LinkedIn Submission Post: *(add link after submission)*
 
-KPI: % of emissions exceeding AI-expected levels
-
-KPI: Most carbon-inefficient sector
-
-KPI: Most carbon-efficient sector
-
-Line Chart: Actual vs AI-Expected CO₂ emissions
-
-Bar Chart: Carbon efficiency by sector
-
-Bar Chart: Top carbon-inefficient countries
-
-Pie Chart: Sector-wise CO₂ contribution
-
-Dashboards are powered directly from Delta tables, ensuring consistency and governance.
-
-🌱 Business Impact & Use Cases
-Who can use this?
-
-Government climate policy teams
-
-ESG & sustainability analysts
-
-Climate research organizations
-
-Energy & industrial planners
-
-Decisions enabled:
-
-Identify sectors requiring emission controls
-
-Benchmark efficient industries
-
-Prioritize countries for climate intervention
-
-Support data-driven climate policy
-
-🛠️ Tech Stack
-
-Databricks Lakehouse
-
-Delta Lake
-
-PySpark
-
-Spark MLlib
-
-Databricks SQL
-
-MLflow (experiment tracking)
-
-GitHub
-
-🚀 How to Run (High-Level)
-
-Upload raw dataset to Databricks
-
-Run Bronze → Silver → Gold notebooks
-
-Train ML model and generate predictions
-
-Build SQL dashboards from Gold tables
-
-📌 Key Learnings
-
-End-to-end AI + data engineering pipeline
-
-Practical use of ML for insight generation
-
-Databricks Lakehouse best practices
-
-Turning predictions into decisions
-
-🧑‍💻 Author
-
-Rohit Ranjan
-Aspiring Data Analyst | Data & AI Enthusiast
-
-🔗 Links
-
-GitHub Repository: (add link)
-
-LinkedIn Post: (add after submission)
+---
