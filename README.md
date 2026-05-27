@@ -1,179 +1,302 @@
-# 🌍 **CarbonSense**
-## **Revealing the True Carbon Cost of Economic Growth using AI on Databricks**
+<div align="center">
+
+# 🌍 CarbonSense
+
+### Revealing the True Carbon Cost of Economic Growth using AI on Databricks
+
+<img src="https://readme-typing-svg.herokuapp.com?font=Poppins&weight=600&size=22&duration=3000&pause=1000&color=2ECC71&center=true&vCenter=true&width=700&lines=Databricks+Lakehouse+%2B+AI+Analytics;Climate+Intelligence+Platform;Carbon+Inefficiency+Detection;Built+using+Delta+Lake+%7C+MLflow+%7C+PySpark" />
+
+<br>
+
+![Databricks](https://img.shields.io/badge/Databricks-Lakehouse-red?style=for-the-badge&logo=databricks)
+![PySpark](https://img.shields.io/badge/PySpark-BigData-orange?style=for-the-badge&logo=apachespark)
+![MLflow](https://img.shields.io/badge/MLflow-Tracking-blue?style=for-the-badge)
+![Delta Lake](https://img.shields.io/badge/Delta-Lake-green?style=for-the-badge)
+
+</div>
 
 ---
 
-## 🚀 **Project Summary**
+## 🚀 Project Summary
 
-**CarbonSense** is an end-to-end **Databricks Lakehouse + AI analytics solution** designed to measure **carbon inefficiency** across emission sources and countries.
+CarbonSense is an **end-to-end Databricks Lakehouse + AI analytics solution** designed to measure **carbon inefficiency across emission sources and countries.**
 
-Instead of only reporting absolute CO₂ emissions, this project uses **machine learning** to learn the *expected* CO₂ emissions based on economic and energy indicators and compares them with *actual* emissions to identify:
+Instead of reporting only absolute CO₂ emissions, CarbonSense applies **Machine Learning** to estimate expected emissions using economic and energy indicators and compares them with actual emissions.
 
-- ❌ Carbon-inefficient sectors and countries  
-- ✅ Carbon-efficient best practices  
-- 🎯 Priority areas for climate intervention  
+### Insights Generated
 
-The project demonstrates how **Databricks, Delta Lake, ML, and SQL analytics** can be combined to build a **real-world decision support system** for climate intelligence.
+❌ Carbon-inefficient sectors and countries
 
----
+✅ Carbon-efficient best practices
 
-## 🎯 **Problem Statement**
+🎯 Priority areas for climate intervention
 
-Traditional climate analysis focuses on **absolute emissions**, which fails to account for economic scale.
-
-### ❓ The Core Question
-> *Is a country or sector emitting more CO₂ than it reasonably should, given its economic activity?*
-
-### ✅ Solution Approach
-CarbonSense introduces a new metric:
-
-
-- **Positive Carbon Gap** → Carbon-inefficient (problematic)
-- **Negative Carbon Gap** → Carbon-efficient (good performance)
-
-This allows fair, data-driven comparison across sectors and countries.
+The project demonstrates how **Databricks + Delta Lake + ML + SQL analytics** can build a real-world climate intelligence system.
 
 ---
 
-## 🤖 **Why AI is Required**
+## 🎯 Problem Statement
 
-Rule-based thresholds cannot capture the complex relationship between:
+Traditional climate analysis focuses only on total emissions.
+
+This ignores economic scale.
+
+### ❓ Core Question
+
+**Is a country or sector emitting more CO₂ than expected given its economic activity?**
+
+### ✅ Solution
+
+CarbonSense introduces:
+
+🟥 Positive Carbon Gap → Carbon-inefficient
+
+🟩 Negative Carbon Gap → Carbon-efficient
+
+This enables fair comparison across sectors and countries.
+
+---
+
+## 🤖 Why AI?
+
+Rule-based systems cannot capture complex relationships between:
+
 - GDP
-- Energy consumption
-- Sector-level emissions
+- Energy Consumption
+- Sector Emissions
 
 AI enables:
-- Learning expected emissions dynamically
-- Comparing performance beyond raw totals
-- Turning predictions into **actionable insights**
+
+✔ Dynamic emission estimation
+
+✔ Fair benchmarking
+
+✔ Actionable climate intelligence
 
 ---
 
-## 🏗️ **Architecture Overview**
-### *(Databricks Lakehouse – Medallion Architecture)*
+# 🏗 Architecture Overview
 
+## Databricks Lakehouse (Medallion Architecture)
 
----
+<div align="center">
 
-### 🟤 **Bronze Layer – Raw Data**
-- Source: OWID CO₂ dataset
-- Stored as Delta table
+```text
+OWID Dataset
+      ↓
+🟤 Bronze Layer
+(Raw Delta Tables)
 
+      ↓
 
----
+⚪ Silver Layer
+(Cleaning + Structuring)
 
-### ⚪ **Silver Layer – Cleaned & Structured**
-- Sector-level emissions
-- Country & year mapping
-- Economic and energy indicators
+      ↓
 
+🟡 Gold Layer
+(Feature Engineering)
 
-Predictions are **persisted back to Delta**, enabling downstream analytics.
+      ↓
 
----
+🤖 ML Regression
 
-## 🤖 **Machine Learning Component**
+      ↓
 
-- **ML Task:** Regression
-- **Model Used:** Linear Regression (interpretable & explainable)
-- **Features:**
-  - GDP
-  - Energy per capita
-- **Target Variable:** Sector-level CO₂ emissions
+Predictions → Delta Tables
 
-### 📊 **Model Evaluation**
-- Train/Test Split: 80/20
-- Metric Used: **RMSE**
-- RMSE Achieved: **17829**
+      ↓
 
-> *Note:* CO₂ values are measured at large absolute scale; the objective is **relative deviation (carbon gap)**, not exact prediction accuracy.
+📊 Databricks SQL Dashboard
+```
+
+</div>
 
 ---
 
-## 🔄 **Database ↔ AI Workflow**
+## 📸 Architecture Diagram
 
-1. Raw data ingested into Delta tables
-2. Features engineered in Gold layer
-3. ML model trained on Gold data
-4. Predictions written back to Delta
-5. Databricks SQL dashboards consume prediction tables
-
-This creates a **closed-loop Lakehouse + AI system**.
+<p align="center">
+<img width="900" src="architecture/lakehouse_architecture.png">
+</p>
 
 ---
 
-## 📊 **Analytics & Dashboards**
-*(Built using Databricks SQL)*
+## 🤖 Machine Learning Component
 
-### Key Insights Delivered:
-- 📌 KPI: Average Global Carbon Inefficiency
-- 📌 KPI: % of emissions exceeding AI-expected levels
-- 📌 KPI: Most carbon-inefficient sector
-- 📌 KPI: Most carbon-efficient sector
-- 📈 Line Chart: Actual vs AI-Expected CO₂ emissions
-- 📊 Bar Chart: Carbon efficiency by emission source
-- 🌍 Bar Chart: Top carbon-inefficient countries
-- 🥧 Pie Chart: Sector-wise contribution to global CO₂
+| Component | Details |
+|-----------|----------|
+| Task | Regression |
+| Model | Linear Regression |
+| Features | GDP, Energy per capita |
+| Target | Sector-level CO₂ emissions |
+| Metric | RMSE |
+| Score | 17829 |
 
-All dashboards are powered directly from **Delta tables**, ensuring governance and consistency.
-
----
-
-## 🌱 **Business Impact & Use Cases**
-
-### 👥 Who Can Use This?
-- Government climate policy teams
-- ESG & sustainability analysts
-- Climate research organizations
-- Energy & industrial planners
-
-### 🧠 Decisions Enabled:
-- Identify sectors requiring emission controls
-- Benchmark efficient industries
-- Prioritize countries for climate intervention
-- Support data-driven climate policy
+> CO₂ values exist at very large scale.  
+> Goal = relative carbon gap analysis rather than exact prediction.
 
 ---
 
-## 🛠️ **Tech Stack**
+## 🔄 Database ↔ AI Workflow
 
-- Databricks Lakehouse
-- Delta Lake
-- PySpark
-- Spark MLlib
-- Databricks SQL
-- MLflow
-- GitHub
+```text
+Raw Data
 
----
+↓
 
-## ▶️ **How to Run the Project (High-Level)**
+Delta Bronze
 
-1. Upload raw dataset to Databricks
-2. Execute Bronze → Silver → Gold notebooks
-3. Train ML model and generate predictions
-4. Build SQL dashboards from Gold tables
+↓
 
----
+Silver Cleaning
 
-## 📚 **Key Learnings**
+↓
 
-- Designing an end-to-end Lakehouse architecture
-- Applying ML for insight generation, not just prediction
-- Using Databricks SQL for decision-grade analytics
-- Converting data into real-world climate insights
+Gold Features
 
----
+↓
 
-## 🧑‍💻 **Author**
+ML Training
 
-**Rohit Ranjan**  
-Aspiring Data Analyst | Data & AI Enthusiast  
+↓
+
+Prediction Storage
+
+↓
+
+SQL Dashboard
+```
+
+Predictions persist back into Delta tables enabling downstream analytics.
 
 ---
 
-## 🔗 **Project Links**
-- GitHub Repository: *(add link here)*
-- LinkedIn Submission Post: *(add link after submission)*
+# 📊 Analytics Dashboard
+
+(Built using Databricks SQL)
+
+### KPI Insights
+
+📌 Average Global Carbon Inefficiency
+
+📌 % Emissions exceeding AI expectation
+
+📌 Most carbon inefficient sector
+
+📌 Most carbon efficient sector
 
 ---
+
+### Visual Analytics
+
+📈 Actual vs Expected CO₂
+
+📊 Carbon efficiency by source
+
+🌍 Carbon inefficient countries
+
+🥧 Sector contribution analysis
+
+---
+
+## Dashboard Preview
+
+<p align="center">
+<img width="1000" src="architecture/dashboard_preview.png">
+</p>
+
+---
+
+# 🌱 Business Impact
+
+## 👥 Users
+
+🏛 Government policy teams
+
+🌿 ESG analysts
+
+🔬 Climate researchers
+
+⚡ Energy planners
+
+---
+
+## 🧠 Decisions Enabled
+
+✔ Identify sectors needing intervention
+
+✔ Benchmark efficient industries
+
+✔ Prioritize climate action
+
+✔ Support policy decisions
+
+---
+
+# 🛠 Tech Stack
+
+<div align="center">
+
+| Technology | Usage |
+|------------|-------|
+| Databricks | Lakehouse Platform |
+| Delta Lake | Storage |
+| PySpark | Data Engineering |
+| Spark MLlib | ML |
+| Databricks SQL | Dashboards |
+| MLflow | Tracking |
+| GitHub | Version Control |
+
+</div>
+
+---
+
+# ▶ Project Workflow
+
+| Notebook | Purpose |
+|----------|----------|
+| 01_bronze_ingestion | Raw ingestion |
+| 02_silver_cleaning | Cleaning |
+| 03_gold_feature_engineering | Features |
+| 04_model_training | ML |
+| 05_predictions | Carbon Gap |
+| 06_dashboard_queries | SQL |
+
+---
+
+# 📚 Key Learnings
+
+✅ End-to-end Lakehouse architecture
+
+✅ Climate intelligence using AI
+
+✅ Databricks SQL analytics
+
+✅ ML-powered insight generation
+
+✅ Real-world sustainability use case
+
+---
+
+# 🧑‍💻 Author
+
+## Rohit Ranjan
+
+Aspiring Data Analyst | Data & AI Enthusiast
+
+---
+
+# 🔗 Links
+
+GitHub Repository: 
+
+LinkedIn Post: https://www.linkedin.com/posts/rohitranjann_databricks-codebasics-indiandataclub-activity-7423925075030126592-gaQN?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFcIbbkByZzSFMtHqHWq4_uKsPKjB6m6be4
+
+---
+
+<div align="center">
+
+### 🌍 CarbonSense — Turning Data into Climate Intelligence
+
+</div>
